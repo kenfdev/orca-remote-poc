@@ -1,0 +1,43 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: .devcontainer/Dockerfile
+    container_name: hono-todo-app
+    working_dir: /workspace
+    environment:
+      DATABASE_URL: postgres://postgres:postgres@postgres:5432/hono_todo
+      PORT: "3000"
+    volumes:
+      - .:/workspace:cached
+      - ./.devcontainer/claude:/home/vscode/.claude
+      - ./.devcontainer/codex:/home/vscode/.codex
+      - ./.devcontainer/ssh:/home/vscode/.ssh
+    depends_on:
+      postgres:
+        condition: service_healthy
+    labels:
+      orca.ssh: "true"
+      orca.user: vscode
+      orca.workspace: /workspace
+    # Intentionally no app or SSH ports are published. Orca reaches the app via
+    # SSH port forwarding after connecting with the ProxyCommand in the README.
+    command: sleep infinity
+
+  postgres:
+    image: postgres:16-alpine
+    container_name: hono-todo-postgres
+    environment:
+      POSTGRES_DB: hono_todo
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres -d hono_todo"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  postgres-data:

@@ -1,0 +1,11 @@
+.git/
+node_modules/
+dist/
+.env
+.pnpm-store/
+.devcontainer/claude/*
+.devcontainer/codex/*
+.devcontainer/ssh/*
+!.devcontainer/claude/.gitkeep
+!.devcontainer/codex/.gitkeep
+!.devcontainer/ssh/.gitkeep

@@ -1,0 +1,18 @@
+node_modules/
+dist/
+.env
+.pnpm-store/
+
+# Local agent auth/config mounts
+.devcontainer/claude/*
+.devcontainer/codex/*
+.devcontainer/ssh/*
+!.devcontainer/claude/.gitkeep
+!.devcontainer/codex/.gitkeep
+!.devcontainer/ssh/.gitkeep
+
+# Logs and editor state
+*.log
+.DS_Store
+.idea/
+.vscode/

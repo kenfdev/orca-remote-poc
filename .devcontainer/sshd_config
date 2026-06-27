@@ -1,0 +1,21 @@
+Port 22
+Protocol 2
+PermitRootLogin no
+PasswordAuthentication no
+PubkeyAuthentication yes
+AuthorizedKeysFile .ssh/authorized_keys
+ChallengeResponseAuthentication no
+UsePAM no
+X11Forwarding no
+AllowTcpForwarding yes
+PermitTunnel no
+AllowAgentForwarding yes
+AllowUsers vscode
+
+# Orca starts sshd through Docker's stdin/stdout with:
+# docker exec -i hono-todo-app /usr/sbin/sshd -i
+# This inetd mode does not require publishing container port 22.
+PidFile /run/sshd/sshd.pid
+
+# SFTP is required for editor file operations over the SSH connection.
+Subsystem sftp /usr/lib/openssh/sftp-server
